@@ -59,19 +59,22 @@ export const usersSlice = createSlice({
 export function sendUserData(userData) {
   return async (dispatch) => {
     try {
-      const result = await fetch("http://localhost:8080/person/insert", {
-        method: "POST",
-        body: JSON.stringify({
-          firstName: userData.firstName,
-          lastName: userData.lastName,
-          city: userData.city,
-          address: userData.address,
-          phone: userData.phone,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const result = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/person/insert`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            city: userData.city,
+            address: userData.address,
+            phone: userData.phone,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const data = await result.json();
       dispatch(addNewUser(data));
@@ -84,7 +87,9 @@ export function sendUserData(userData) {
 export function getUserData() {
   return async (dispatch) => {
     try {
-      const result = await fetch("http://localhost:8080/person/getAll");
+      const result = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}/person/getAll`
+      );
 
       const data = await result.json();
 
@@ -99,7 +104,7 @@ export function deleteUserData(userId) {
   return async (dispatch) => {
     try {
       const result = await fetch(
-        `http://localhost:8080/person/delete/${userId}`,
+        `${import.meta.env.VITE_BACKEND_URL}/person/delete/${userId}`,
         {
           method: "DELETE",
         }
@@ -117,7 +122,7 @@ export function updateUserData(userData) {
   return async (dispatch) => {
     try {
       const result = await fetch(
-        `http://localhost:8080/person/update/${userData._id}`,
+        `${import.meta.env.VITE_BACKEND_URL}/person/update/${userData._id}`,
         {
           method: "POST",
           body: JSON.stringify({
